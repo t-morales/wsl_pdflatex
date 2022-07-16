@@ -26,9 +26,9 @@ where `YOUR_USER_NAME` is your user path in windows
 
 ## Preparing wsl-alias
 
-Use the command wsl-alias inside WSL to create an alias for pdflatex:
+Use the command wsl-alias inside PowerShell to create an alias for pdflatex:
 
-``wsl-alias add pdflatex pdflatex`` 
+``b wsl-alias add pdflatex pdflatex`` 
 
 This will create a file `pdflatex.bat` inside the folder ``C:\Users\YOUR_USER_NAME\wsl-alias``
 
