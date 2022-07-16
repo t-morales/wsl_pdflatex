@@ -22,28 +22,43 @@ Do not forget to include the installation path into your user environment variab
 
 ``C:\Users\YOUR_USER_NAME\wsl-alias;``
 
+where `YOUR_USER_NAME` is your user path in windows
+
 ## Preparing wsl-alias
 
 Use the command wsl-alias inside WSL to create an alias for pdflatex:
 
 ``wsl-alias add pdflatex pdflatex`` 
 
-This will create a file `pdflatex.bat` inside the folder ``C:\Users\YOUR_USER_NAME\wsl-alias;``
+This will create a file `pdflatex.bat` inside the folder ``C:\Users\YOUR_USER_NAME\wsl-alias``
 
-You may want to add any environmental variables you use inside WSL. For instance, inside WSL I have edited `$HOME/.wsl-alias/env.sh` to add
-
-.. code-block:: bash
-  export BIBINPUTS=.:$HOME/Documents/Bibtex:$HOME/.bib:$BIBINPUTS
-  
-  export TEXINPUTS=.:$HOME/.TeX:$TEXINPUTS
+This part is optional, but you may want to add any environmental variables you use inside WSL. For instance, inside WSL I have edited `$HOME/.wsl-alias/env.sh` to add
 
 
-This is a normal text paragraph. The next paragraph is a code sample::
+```bash
+export BIBINPUTS=.:$HOME/Documents/Bibtex:$HOME/.bib:$BIBINPUTS
+export TEXINPUTS=.:$HOME/.TeX:$TEXINPUTS
+```
 
-   It is not processed in any way, except
-   that the indentation is removed.
+## Configure TeXstudio
 
-   It can span multiple lines.
+Now, you have everything prepared to configure TeXstudio on Windows. Just go to Configure and in commands, add to pdflatex something similar to 
 
-This is a normal text paragraph again.
+``"C:/Users/YOUR_USER_NAME/wsl-alias/pdflatex.bat"  -synctex=1 -interaction=nonstopmode %.tex``
 
+and you can now test if everything is working
+
+## Configuring synctex
+
+synctex will not work directly and you cannot go to source from the pdf or viceversa because synctex will refer to the linux path and TeXstudio will be on windows.
+
+To fix this, edit ``C:\Users\YOUR_USER_NAME\wsl-alias\pdflatex.bat`` and after the line ``wsl ~/.wsl-alias/wrapper.sh '%pwd%' pdflatex %cmd%`` add the following
+
+``wsl ~/.wsl-alias/wrapper.sh '%pwd%' ~/bin/synctex2win %cmd%``
+
+Now, in WSL add the file  ``synctex2win`` located in this repository to a folder included in the PATH of WSL. 
+It could be something lik ``$HOME/.local/bin``
+
+You have to install perl as well in WSL as it will be needed by the script
+
+That is, with that, everything should work now
