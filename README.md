@@ -40,6 +40,8 @@ export BIBINPUTS=.:$HOME/Documents/Bibtex:$HOME/.bib:$BIBINPUTS
 export TEXINPUTS=.:$HOME/.TeX:$TEXINPUTS
 ```
 
+You may want to create aliases for `bibtex` or `biber` as well
+
 ## Configure TeXstudio
 
 Now, you have everything prepared to configure TeXstudio on Windows. Just go to Configure and in commands, add to pdflatex something similar to 
