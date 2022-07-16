@@ -1,0 +1,11 @@
+#!/bin/bash
+
+filename="${*: -1}"
+filename="${filename%.*}"
+
+echo "Modifying $filename.synctex.gz para WSL"
+
+gunzip "$filename.synctex.gz"
+# We remove strings  /mnt/c/ (refering to windows path from linux)
+perl -pi -e 's/\/mnt\/c//g' "$filename.synctex"
+gzip "$filename.synctex"
